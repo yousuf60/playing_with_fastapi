@@ -6,7 +6,7 @@ def link_list(lst: list):
     
     #[(path,text),....]
     for p,t in lst:
-        text += f"""<a href="{p}">{t}</a>\n"""
+        text += f"""<a href="./{p}">{t}</a>\n"""
     
     return HTMLResponse(text)
     

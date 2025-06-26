@@ -3,14 +3,14 @@ from .shared import *
 
 root_html = link_list(
     [
-        ("./owl","owl"),
+        ("owl","owl"),
     ]
 )
 root = APIRouter(prefix="/birds")
 @root.get("/")
-async def tempmain()->str:
+async def tempmain()->HTMLResponse:
     return root_html
     
 @root.get("/owl")
-async def tempmain()->str:
+async def tempmain()->HTMLResponse:
     return HTMLResponse("ooo")
