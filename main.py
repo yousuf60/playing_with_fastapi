@@ -4,7 +4,7 @@ from pages import main_html
 from pages import cats
 from pages import birds
 
-app = FastAPI()
+app = FastAPI(title="Animal zeaw")
 app.include_router(cats.root)
 app.include_router(birds.root)
 
