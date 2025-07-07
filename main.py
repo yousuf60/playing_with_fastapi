@@ -10,5 +10,5 @@ app.include_router(birds.root)
 
 @app.get("/")
 async def supermain()->fastapi.responses.HTMLResponse:
-    return main_html
+    return main_html.html()
 

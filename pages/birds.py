@@ -9,7 +9,7 @@ root_html = link_list(
 root = APIRouter(prefix="/birds")
 @root.get("/")
 async def tempmain()->HTMLResponse:
-    return root_html
+    return root_html.html()
     
 @root.get("/owl")
 async def tempmain()->HTMLResponse:
