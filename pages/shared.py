@@ -1,7 +1,24 @@
-import fastapi
-from fastapi.responses import HTMLResponse
 import os
 import pathlib
+from typing import Annotated
+from struct import Struct
+import fastapi
+from fastapi import Query
+from fastapi.responses import HTMLResponse
+
+# name , textorcomment
+class Names(Struct):
+    ducks = ("ducks", "duck duck")
+    lions = ("lions", "lions")
+    pets = ("pets", "pets")
+
+
+# path of the roots
+class Roots(Struct):
+    birds = (Names.ducks, )
+    cats = (Names.lions, Names.pets)
+
+
 
 #takes list to turn it into html links returning htmlholder class
 def link_list(lst: list):
@@ -11,7 +28,7 @@ def link_list(lst: list):
     for p,t in lst:
         text += f"""<br> <a href="./{p}">{t}</a>"""
     
-    return HtmlHolder(text)
+    return HTMLHolder(text)
     
 
 # join path together
@@ -35,7 +52,7 @@ def get_file(*path):
     return 0
 
 # hold string to call or get htmlresponse of it
-class HtmlHolder:
+class HTMLHolder:
     text = ""
     def __init__(self, text: str):
         self.text = text
@@ -50,3 +67,23 @@ class HtmlHolder:
         self.text += txt.text
         return self
         
+
+
+
+
+#mini file getter for dependincies 
+class FL:
+    folder: str 
+    title: str 
+    fl = None
+    def __init__(self, title, folder):
+        self.folder = folder
+        self.title = title
+        
+    async def __call__(self,file: Annotated[str|None,Query()]=None):
+        if file:
+            self.fl = get_file(self.title, self.folder, file)
+        return self
+    
+    
+
