@@ -6,12 +6,14 @@ import fastapi
 from fastapi import Query
 from fastapi.responses import HTMLResponse
 
-# name , textorcomment
+# name , textorcomment in case of editions
 class Names(Struct):
+    birds = "birds"
+    cats = "cats"
     ducks = ("ducks", "duck duck")
     lions = ("lions", "lions")
     pets = ("pets", "pets")
-
+    
 
 # path of the roots
 class Roots(Struct):
@@ -53,7 +55,7 @@ def get_file(*path):
 
 # hold string to call or get htmlresponse of it
 class HTMLHolder:
-    text = ""
+    text: str
     def __init__(self, text: str):
         self.text = text
         

@@ -2,8 +2,7 @@ from typing import Annotated
 from .shared import *
 from fastapi import APIRouter, Query, Depends
 
-title = "cats"
-
+title = Names.cats
 root_html = link_list(
     Roots.cats
 )
