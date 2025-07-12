@@ -3,8 +3,9 @@ import pathlib
 from typing import Annotated
 from struct import Struct
 import fastapi
-from fastapi import Query
+from fastapi import Query, Depends
 from fastapi.responses import HTMLResponse
+
 
 # name , textorcomment in case of editions
 class Names(Struct):
@@ -13,13 +14,14 @@ class Names(Struct):
     ducks = ("ducks", "duck duck")
     lions = ("lions", "lions")
     pets = ("pets", "pets")
+    owls = ("owls", "owls")
     
 
 # path of the roots
 class Roots(Struct):
-    birds = (Names.ducks, )
+    birds = (Names.ducks, Names.owls)
     cats = (Names.lions, Names.pets)
-
+    
 
 
 #takes list to turn it into html links returning htmlholder class
@@ -74,18 +76,20 @@ class HTMLHolder:
 
 
 #mini file getter for dependincies 
-class FL:
+class FL(object):
     folder: str 
     title: str 
-    fl = None
+
     def __init__(self, title, folder):
         self.folder = folder
         self.title = title
         
     async def __call__(self,file: Annotated[str|None,Query()]=None):
         if file:
-            self.fl = get_file(self.title, self.folder, file)
-        return self
+            return get_file(self.title, self.folder, file)
+    
+        return 0
+
     
     
 

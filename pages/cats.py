@@ -1,6 +1,6 @@
 from typing import Annotated
 from .shared import *
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter
 
 title = Names.cats
 root_html = link_list(
@@ -11,25 +11,25 @@ root = APIRouter(prefix="/"+title)
 
 
 @root.get("/")
-async def main() -> HTMLResponse:
+async def main_cats() -> HTMLResponse:
     return root_html.html()
     
 @root.get("/"+Names.pets[0]+"/")
 async def pets(file: Annotated[FL|None,
-                    Depends(FL(title, Names.pets[0]))]) :
-    if file.fl:
-        return file.fl
+                    Depends(FL(title, Names.pets[0]))],
+                    ) :
+    if file:
+        return file
         
-    return (HTMLHolder("mewmew") + list_files(file.title, file.folder)).html()
+    return (HTMLHolder("mewmew") + list_files(title, Names.pets[0])).html()
 
 @root.get("/"+Names.lions[0]+"/")
 async def lion(file: Annotated[FL|None,
-                                Depends(FL(title, Names.lions[0]))]) :    
-    if file.fl:
-        return file.fl 
-    return (HTMLHolder("roar") + list_files(file.title, file.folder)).html()
-
-
-
+                        Depends(FL(title, Names.lions[0]))],
+                                ) :    
+    if file:
+        return file
+        
+    return (HTMLHolder("roar") + list_files(title, Names.lions[0])).html()
 
 
